@@ -76,9 +76,27 @@ body{
   color:black;
 }
 
+.password-container{
+  position:relative;
+}
+
+.password-container input{
+  margin-bottom:0;
+}
+
+.eye-icon{
+  position:absolute;
+  right:15px;
+  top:15px;
+  cursor:pointer;
+  color:white;
+  font-size:18px;
+}
+
 .password-text{
   color:#ddd;
   font-size:13px;
+  margin-top:10px;
   margin-bottom:15px;
   line-height:20px;
 }

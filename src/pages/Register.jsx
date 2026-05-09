@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import API from "../services/api";
 
 function Register() {
 
     const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const [formData, setFormData] = useState({
         userId: "",
@@ -103,13 +107,26 @@ function Register() {
                         required
                     />
 
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        onChange={handleChange}
-                        required
-                    />
+                    <div className="password-container">
+
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="Password"
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <span
+                            className="eye-icon"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+
+                        </span>
+
+                    </div>
 
                     <small className="password-text">
                         Password must contain 8-12 characters,
@@ -153,7 +170,11 @@ function Register() {
                         </option>
 
                         {questions.map((q,index)=>(
-                            <option key={index} value={q}>
+                            <option
+                                key={index}
+                                value={q}
+                                disabled={formData.question1 === q}
+                            >
                                 {q}
                             </option>
                         ))}
@@ -173,6 +194,14 @@ function Register() {
                     </button>
 
                 </form>
+
+                <div className="links">
+
+                    <Link to="/login">
+                        Already have an account? Login
+                    </Link>
+
+                </div>
 
             </div>
 
