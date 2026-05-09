@@ -19,7 +19,7 @@ body{
 }
 
 .card{
-  width:420px;
+  width:430px;
   background:rgba(255,255,255,0.12);
   backdrop-filter:blur(15px);
   padding:40px;
@@ -56,6 +56,10 @@ body{
   color:#ddd;
 }
 
+.card input[type="date"]{
+  color:white;
+}
+
 .card select{
   width:100%;
   padding:14px;
@@ -70,6 +74,13 @@ body{
 
 .card select option{
   color:black;
+}
+
+.password-text{
+  color:#ddd;
+  font-size:13px;
+  margin-bottom:15px;
+  line-height:20px;
 }
 
 .card button{

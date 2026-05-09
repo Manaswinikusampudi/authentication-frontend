@@ -9,6 +9,7 @@ function Register() {
     const [formData, setFormData] = useState({
         userId: "",
         username: "",
+        dob: "",
         password: "",
         question1: "",
         answer1: "",
@@ -32,9 +33,26 @@ function Register() {
         });
     };
 
+    const validatePassword = (password) => {
+
+        const regex =
+            /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+
+        return regex.test(password);
+    };
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+
+        if (!validatePassword(formData.password)) {
+
+            alert(
+                "Password must contain:\n\n• 8-12 characters\n• 1 Capital Letter\n• 1 Special Character"
+            );
+
+            return;
+        }
 
         try {
 
@@ -79,6 +97,13 @@ function Register() {
                     />
 
                     <input
+                        type="date"
+                        name="dob"
+                        onChange={handleChange}
+                        required
+                    />
+
+                    <input
                         type="password"
                         name="password"
                         placeholder="Password"
@@ -86,12 +111,20 @@ function Register() {
                         required
                     />
 
+                    <small className="password-text">
+                        Password must contain 8-12 characters,
+                        1 Capital Letter and 1 Special Character
+                    </small>
+
                     <select
                         name="question1"
                         onChange={handleChange}
                         required
                     >
-                        <option value="">Select Question 1</option>
+
+                        <option value="">
+                            Select Question 1
+                        </option>
 
                         {questions.map((q,index)=>(
                             <option key={index} value={q}>
@@ -114,7 +147,10 @@ function Register() {
                         onChange={handleChange}
                         required
                     >
-                        <option value="">Select Question 2</option>
+
+                        <option value="">
+                            Select Question 2
+                        </option>
 
                         {questions.map((q,index)=>(
                             <option key={index} value={q}>
