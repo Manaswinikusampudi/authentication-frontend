@@ -144,7 +144,11 @@ function Register() {
                         </option>
 
                         {questions.map((q,index)=>(
-                            <option key={index} value={q}>
+                            <option
+                                key={index}
+                                value={q}
+                                disabled={formData.question2 === q}
+                            >
                                 {q}
                             </option>
                         ))}

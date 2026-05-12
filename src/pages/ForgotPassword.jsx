@@ -9,6 +9,11 @@ function ForgotPassword() {
         answer2: ""
     });
 
+    const [questions, setQuestions] = useState({
+        question1: "",
+        question2: ""
+    });
+
     const handleChange = (e) => {
 
         setFormData({
@@ -17,13 +22,35 @@ function ForgotPassword() {
         });
     };
 
+    const fetchQuestions = async () => {
+
+        try {
+
+            const response = await API.get(
+                `/user/${formData.userId}`
+            );
+
+            setQuestions({
+                question1: response.data.question1,
+                question2: response.data.question2
+            });
+
+        } catch (error) {
+
+            alert("User not found");
+        }
+    };
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
 
         try {
 
-            const response = await API.post("/forgotPassword", formData);
+            const response = await API.post(
+                "/forgotPassword",
+                formData
+            );
 
             alert(response.data);
 
@@ -43,37 +70,51 @@ function ForgotPassword() {
 
                 <h1>Forgot Password</h1>
 
-                <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    name="userId"
+                    placeholder="User ID"
+                    onChange={handleChange}
+                />
 
-                    <input
-                        type="text"
-                        name="userId"
-                        placeholder="User ID"
-                        onChange={handleChange}
-                        required
-                    />
+                <button onClick={fetchQuestions}>
+                    Load Questions
+                </button>
 
-                    <input
-                        type="text"
-                        name="answer1"
-                        placeholder="Answer 1"
-                        onChange={handleChange}
-                        required
-                    />
+                {questions.question1 && (
 
-                    <input
-                        type="text"
-                        name="answer2"
-                        placeholder="Answer 2"
-                        onChange={handleChange}
-                        required
-                    />
+                    <form onSubmit={handleSubmit}>
 
-                    <button type="submit">
-                        Recover Password
-                    </button>
+                        <p className="question-text">
+                            {questions.question1}
+                        </p>
 
-                </form>
+                        <input
+                            type="text"
+                            name="answer1"
+                            placeholder="Answer 1"
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <p className="question-text">
+                            {questions.question2}
+                        </p>
+
+                        <input
+                            type="text"
+                            name="answer2"
+                            placeholder="Answer 2"
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <button type="submit">
+                            Recover Password
+                        </button>
+
+                    </form>
+                )}
 
             </div>
 
