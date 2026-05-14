@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-import API from "../services/api";
+import { registerUser } from "../services/userService";
 
 function Register() {
 
@@ -60,7 +60,7 @@ function Register() {
 
         try {
 
-            const response = await API.post("/register", formData);
+            const response = await registerUser(formData);
 
             alert(response.data);
 

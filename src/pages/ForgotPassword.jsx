@@ -1,7 +1,14 @@
 import { useState } from "react";
-import API from "../services/api";
+import { useNavigate, Link } from "react-router-dom";
+
+import {
+    forgotPassword,
+    getUserQuestions
+} from "../services/userService";
 
 function ForgotPassword() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         userId: "",
@@ -26,8 +33,8 @@ function ForgotPassword() {
 
         try {
 
-            const response = await API.get(
-                `/user/${formData.userId}`
+            const response = await getUserQuestions(
+                formData.userId
             );
 
             setQuestions({
@@ -47,12 +54,11 @@ function ForgotPassword() {
 
         try {
 
-            const response = await API.post(
-                "/forgotPassword",
-                formData
-            );
+            const response = await forgotPassword(formData);
 
             alert(response.data);
+
+            navigate("/login");
 
         } catch (error) {
 
@@ -115,6 +121,14 @@ function ForgotPassword() {
 
                     </form>
                 )}
+
+                <div className="links">
+
+                    <Link to="/login">
+                        Back to Login
+                    </Link>
+
+                </div>
 
             </div>
 

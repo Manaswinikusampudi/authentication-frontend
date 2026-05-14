@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import API from "../services/api";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+import { loginUser } from "../services/userService";
 
 function Login() {
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const [formData, setFormData] = useState({
         userId: "",
@@ -23,7 +27,7 @@ function Login() {
 
         try {
 
-            const response = await API.post("/login", formData);
+            const response = await loginUser(formData);
 
             alert(response.data);
 
@@ -53,13 +57,26 @@ function Login() {
                         required
                     />
 
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        onChange={handleChange}
-                        required
-                    />
+                    <div className="password-container">
+
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="Password"
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <span
+                            className="eye-icon"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+
+                        </span>
+
+                    </div>
 
                     <button type="submit">
                         Login
