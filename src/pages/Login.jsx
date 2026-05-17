@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-import { loginUser } from "../services/userService";
+import {
+    FaEye,
+    FaEyeSlash
+} from "react-icons/fa";
+
+import {
+    loginUser
+} from "../services/userService";
 
 function Login() {
 
-    const [showPassword, setShowPassword] = useState(false);
+    // PASSWORD HIDDEN INITIALLY
+    const [showPassword, setShowPassword]
+        = useState(false);
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData]
+        = useState({
+
         userId: "",
         password: ""
     });
@@ -16,6 +26,7 @@ function Login() {
     const handleChange = (e) => {
 
         setFormData({
+
             ...formData,
             [e.target.name]: e.target.value
         });
@@ -27,7 +38,8 @@ function Login() {
 
         try {
 
-            const response = await loginUser(formData);
+            const response =
+                await loginUser(formData);
 
             alert(response.data);
 
@@ -57,10 +69,16 @@ function Login() {
                         required
                     />
 
+                    {/* PASSWORD */}
+
                     <div className="password-container">
 
                         <input
-                            type={showPassword ? "text" : "password"}
+                            type={
+                                showPassword
+                                ? "text"
+                                : "password"
+                            }
                             name="password"
                             placeholder="Password"
                             onChange={handleChange}
@@ -69,10 +87,18 @@ function Login() {
 
                         <span
                             className="eye-icon"
-                            onClick={() => setShowPassword(!showPassword)}
+                            onClick={() =>
+                                setShowPassword(
+                                    !showPassword
+                                )
+                            }
                         >
 
-                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            {
+                                showPassword
+                                ? <FaEye />
+                                : <FaEyeSlash />
+                            }
 
                         </span>
 
@@ -84,7 +110,9 @@ function Login() {
 
                 </form>
 
-                <div className="links">
+                {/* SIDE-BY-SIDE LINKS */}
+
+                <div className="side-links">
 
                     <Link to="/changePassword">
                         Change Password
@@ -92,6 +120,16 @@ function Login() {
 
                     <Link to="/forgotPassword">
                         Forgot Password
+                    </Link>
+
+                </div>
+
+                {/* CHANGE USER CREDENTIALS */}
+
+                <div className="links">
+
+                    <Link to="/changeCredentials">
+                        Change User Credentials
                     </Link>
 
                 </div>

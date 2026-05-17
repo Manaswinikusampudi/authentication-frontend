@@ -1,16 +1,36 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate, Link }
+from "react-router-dom";
 
-import { changePassword } from "../services/userService";
+import {
+    FaEye,
+    FaEyeSlash
+} from "react-icons/fa";
+
+import {
+    changePassword
+} from "../services/userService";
 
 function ChangePassword() {
 
     const navigate = useNavigate();
 
-    const [showPassword, setShowPassword] = useState(false);
+    // SEPARATE EYE STATES
+    const [showOldPassword,
+        setShowOldPassword]
+        = useState(false);
 
-    const [formData, setFormData] = useState({
+    const [showNewPassword,
+        setShowNewPassword]
+        = useState(false);
+
+    const [showConfirmPassword,
+        setShowConfirmPassword]
+        = useState(false);
+
+    const [formData, setFormData]
+        = useState({
+
         userId: "",
         oldPassword: "",
         newPassword: "",
@@ -20,11 +40,13 @@ function ChangePassword() {
     const handleChange = (e) => {
 
         setFormData({
+
             ...formData,
             [e.target.name]: e.target.value
         });
     };
 
+    // PASSWORD VALIDATION
     const validatePassword = (password) => {
 
         const regex =
@@ -37,7 +59,12 @@ function ChangePassword() {
 
         e.preventDefault();
 
-        if (!validatePassword(formData.newPassword)) {
+        // PASSWORD VALIDATION
+        if(
+            !validatePassword(
+                formData.newPassword
+            )
+        ) {
 
             alert(
                 "Password must contain:\n\n• 8-12 characters\n• 1 Capital Letter\n• 1 Special Character"
@@ -48,11 +75,19 @@ function ChangePassword() {
 
         try {
 
-            const response = await changePassword(formData);
+            const response =
+                await changePassword(formData);
 
             alert(response.data);
 
-            navigate("/login");
+            // REDIRECT ONLY AFTER SUCCESS
+            if(
+                response.data ===
+                "Password changed successfully"
+            ) {
+
+                navigate("/login");
+            }
 
         } catch (error) {
 
@@ -80,10 +115,16 @@ function ChangePassword() {
                         required
                     />
 
+                    {/* OLD PASSWORD */}
+
                     <div className="password-container">
 
                         <input
-                            type={showPassword ? "text" : "password"}
+                            type={
+                                showOldPassword
+                                ? "text"
+                                : "password"
+                            }
                             name="oldPassword"
                             placeholder="Old Password"
                             onChange={handleChange}
@@ -92,45 +133,87 @@ function ChangePassword() {
 
                         <span
                             className="eye-icon"
-                            onClick={() => setShowPassword(!showPassword)}
+                            onClick={() =>
+                                setShowOldPassword(
+                                    !showOldPassword
+                                )
+                            }
                         >
 
-                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            {
+                                showOldPassword
+                                ? <FaEye />
+                                : <FaEyeSlash />
+                            }
 
                         </span>
 
                     </div>
 
+                    {/* NEW PASSWORD */}
+
                     <div className="password-container">
 
                         <input
-                            type={showPassword ? "text" : "password"}
+                            type={
+                                showNewPassword
+                                ? "text"
+                                : "password"
+                            }
                             name="newPassword"
                             placeholder="New Password"
                             onChange={handleChange}
+
+                            // DISABLE COPY/PASTE
+                            onPaste={(e) =>
+                                e.preventDefault()
+                            }
+
+                            onCopy={(e) =>
+                                e.preventDefault()
+                            }
+
                             required
                         />
 
                         <span
                             className="eye-icon"
-                            onClick={() => setShowPassword(!showPassword)}
+                            onClick={() =>
+                                setShowNewPassword(
+                                    !showNewPassword
+                                )
+                            }
                         >
 
-                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            {
+                                showNewPassword
+                                ? <FaEye />
+                                : <FaEyeSlash />
+                            }
 
                         </span>
 
                     </div>
 
                     <small className="password-text">
-                        Password must contain 8-12 characters,
-                        1 Capital Letter and 1 Special Character
+
+                        Password must contain
+                        8-12 characters,
+                        1 Capital Letter and
+                        1 Special Character
+
                     </small>
+
+                    {/* CONFIRM PASSWORD */}
 
                     <div className="password-container">
 
                         <input
-                            type={showPassword ? "text" : "password"}
+                            type={
+                                showConfirmPassword
+                                ? "text"
+                                : "password"
+                            }
                             name="confirmPassword"
                             placeholder="Confirm Password"
                             onChange={handleChange}
@@ -139,10 +222,18 @@ function ChangePassword() {
 
                         <span
                             className="eye-icon"
-                            onClick={() => setShowPassword(!showPassword)}
+                            onClick={() =>
+                                setShowConfirmPassword(
+                                    !showConfirmPassword
+                                )
+                            }
                         >
 
-                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            {
+                                showConfirmPassword
+                                ? <FaEye />
+                                : <FaEyeSlash />
+                            }
 
                         </span>
 

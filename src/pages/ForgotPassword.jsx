@@ -1,22 +1,32 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 
 import {
+    useNavigate,
+    Link
+} from "react-router-dom";
+
+import {
+
     forgotPassword,
     getUserQuestions
+
 } from "../services/userService";
 
 function ForgotPassword() {
 
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData]
+        = useState({
+
         userId: "",
         answer1: "",
         answer2: ""
     });
 
-    const [questions, setQuestions] = useState({
+    const [questions, setQuestions]
+        = useState({
+
         question1: "",
         question2: ""
     });
@@ -24,22 +34,29 @@ function ForgotPassword() {
     const handleChange = (e) => {
 
         setFormData({
+
             ...formData,
             [e.target.name]: e.target.value
         });
     };
 
+    // LOAD QUESTIONS
     const fetchQuestions = async () => {
 
         try {
 
-            const response = await getUserQuestions(
-                formData.userId
-            );
+            const response =
+                await getUserQuestions(
+                    formData.userId
+                );
 
             setQuestions({
-                question1: response.data.question1,
-                question2: response.data.question2
+
+                question1:
+                    response.data.question1,
+
+                question2:
+                    response.data.question2
             });
 
         } catch (error) {
@@ -54,11 +71,22 @@ function ForgotPassword() {
 
         try {
 
-            const response = await forgotPassword(formData);
+            const response =
+                await forgotPassword(
+                    formData
+                );
 
             alert(response.data);
 
-            navigate("/login");
+            // REDIRECT ONLY AFTER SUCCESS
+            if(
+                response.data.includes(
+                    "Your password is:"
+                )
+            ) {
+
+                navigate("/login");
+            }
 
         } catch (error) {
 
@@ -87,40 +115,49 @@ function ForgotPassword() {
                     Load Questions
                 </button>
 
-                {questions.question1 && (
+                {
 
-                    <form onSubmit={handleSubmit}>
+                    questions.question1 && (
 
-                        <p className="question-text">
-                            {questions.question1}
-                        </p>
+                        <form onSubmit={handleSubmit}>
 
-                        <input
-                            type="text"
-                            name="answer1"
-                            placeholder="Answer 1"
-                            onChange={handleChange}
-                            required
-                        />
+                            <p className="question-text">
 
-                        <p className="question-text">
-                            {questions.question2}
-                        </p>
+                                {questions.question1}
 
-                        <input
-                            type="text"
-                            name="answer2"
-                            placeholder="Answer 2"
-                            onChange={handleChange}
-                            required
-                        />
+                            </p>
 
-                        <button type="submit">
-                            Recover Password
-                        </button>
+                            <input
+                                type="text"
+                                name="answer1"
+                                placeholder="Answer 1"
+                                onChange={handleChange}
+                                required
+                            />
 
-                    </form>
-                )}
+                            <p className="question-text">
+
+                                {questions.question2}
+
+                            </p>
+
+                            <input
+                                type="text"
+                                name="answer2"
+                                placeholder="Answer 2"
+                                onChange={handleChange}
+                                required
+                            />
+
+                            <button type="submit">
+
+                                Recover Password
+
+                            </button>
+
+                        </form>
+                    )
+                }
 
                 <div className="links">
 

@@ -1,24 +1,22 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate, Link }
+from "react-router-dom";
 
-import { registerUser } from "../services/userService";
+import {
+    changeCredentials
+} from "../services/userService";
 
-function Register() {
+function ChangeCredentials() {
 
     const navigate = useNavigate();
-
-    // PASSWORD HIDDEN INITIALLY
-    const [showPassword, setShowPassword]
-        = useState(false);
 
     const [formData, setFormData]
         = useState({
 
-        userId: "",
-        username: "",
-        dob: "",
+        currentUserId: "",
         password: "",
+
+        newUserId: "",
 
         question1: "",
         answer1: "",
@@ -45,71 +43,14 @@ function Register() {
         });
     };
 
-    // PASSWORD VALIDATION
-    const validatePassword = (password) => {
-
-        const regex =
-            /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
-
-        return regex.test(password);
-    };
-
-    // AGE VALIDATION
-    const validateAge = (dob) => {
-
-        const birthDate = new Date(dob);
-
-        const today = new Date();
-
-        let age =
-            today.getFullYear()
-            - birthDate.getFullYear();
-
-        const month =
-            today.getMonth()
-            - birthDate.getMonth();
-
-        if(
-            month < 0 ||
-            (
-                month === 0 &&
-                today.getDate()
-                < birthDate.getDate()
-            )
-        ) {
-
-            age--;
-        }
-
-        return age >= 18;
-    };
-
     const handleSubmit = async (e) => {
 
         e.preventDefault();
 
-        // AGE VALIDATION
-        if(!validateAge(formData.dob)) {
-
-            alert("User must be 18+");
-
-            return;
-        }
-
-        // PASSWORD VALIDATION
-        if(!validatePassword(formData.password)) {
-
-            alert(
-                "Password must contain:\n\n• 8-12 characters\n• 1 Capital Letter\n• 1 Special Character"
-            );
-
-            return;
-        }
-
         try {
 
             const response =
-                await registerUser(formData);
+                await changeCredentials(formData);
 
             alert(response.data);
 
@@ -117,7 +58,7 @@ function Register() {
 
         } catch (error) {
 
-            alert("Registration Failed");
+            alert("Failed");
 
             console.log(error);
         }
@@ -129,80 +70,35 @@ function Register() {
 
             <div className="card">
 
-                <h1>User Registration</h1>
+                <h1>
+                    Change User Credentials
+                </h1>
 
                 <form onSubmit={handleSubmit}>
 
                     <input
                         type="text"
-                        name="userId"
-                        placeholder="User ID"
+                        name="currentUserId"
+                        placeholder="Current User ID"
+                        onChange={handleChange}
+                        required
+                    />
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
                         onChange={handleChange}
                         required
                     />
 
                     <input
                         type="text"
-                        name="username"
-                        placeholder="Username"
+                        name="newUserId"
+                        placeholder="New User ID"
                         onChange={handleChange}
                         required
                     />
-
-                    <label className="dob-label">
-                        Date of Birth
-                    </label>
-
-                    <input
-                        type="date"
-                        name="dob"
-                        onChange={handleChange}
-                        required
-                    />
-
-                    {/* PASSWORD */}
-
-                    <div className="password-container">
-
-                        <input
-                            type={
-                                showPassword
-                                ? "text"
-                                : "password"
-                            }
-                            name="password"
-                            placeholder="Password"
-                            onChange={handleChange}
-                            required
-                        />
-
-                        <span
-                            className="eye-icon"
-                            onClick={() =>
-                                setShowPassword(
-                                    !showPassword
-                                )
-                            }
-                        >
-
-                            {
-                                showPassword
-                                ? <FaEye />
-                                : <FaEyeSlash />
-                            }
-
-                        </span>
-
-                    </div>
-
-                    <small className="password-text">
-
-                        Password must contain
-                        8-12 characters,
-                        1 Capital Letter and
-                        1 Special Character
-
-                    </small>
 
                     {/* QUESTION 1 */}
 
@@ -281,7 +177,7 @@ function Register() {
                     />
 
                     <button type="submit">
-                        Register
+                        Update Credentials
                     </button>
 
                 </form>
@@ -289,8 +185,7 @@ function Register() {
                 <div className="links">
 
                     <Link to="/login">
-                        Already have an account?
-                        Login
+                        Back to Login
                     </Link>
 
                 </div>
@@ -301,4 +196,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default ChangeCredentials;

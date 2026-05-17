@@ -3,29 +3,52 @@ import API from "./api";
 // REGISTER
 export const registerUser = async (data) => {
 
-    return await API.post("/register", data);
+    return await API.post(
+        "/register",
+        data
+    );
 };
 
 // LOGIN
 export const loginUser = async (data) => {
 
-    return await API.post("/login", data);
+    return await API.post(
+        "/login",
+        data
+    );
 };
 
 // CHANGE PASSWORD
 export const changePassword = async (data) => {
 
-    return await API.post("/changePassword", data);
+    return await API.post(
+        "/changePassword",
+        data
+    );
 };
 
 // FORGOT PASSWORD
 export const forgotPassword = async (data) => {
 
-    return await API.post("/forgotPassword", data);
+    return await API.post(
+        "/forgotPassword",
+        data
+    );
 };
 
 // LOAD USER QUESTIONS
 export const getUserQuestions = async (userId) => {
 
-    return await API.get(`/user/${userId}`);
+    return await API.get(
+        `/user/${userId}`
+    );
+};
+
+// CHANGE USER CREDENTIALS
+export const changeCredentials = async (data) => {
+
+    return await API.post(
+        "/changeCredentials",
+        data
+    );
 };

@@ -81,7 +81,7 @@ body{
 }
 
 .password-container input{
-  margin-bottom:0;
+  margin-bottom:15px;
 }
 
 .eye-icon{
@@ -96,9 +96,21 @@ body{
 .password-text{
   color:#ddd;
   font-size:13px;
-  margin-top:10px;
+  margin-top:5px;
   margin-bottom:15px;
   line-height:20px;
+}
+
+.dob-label{
+  margin-bottom:8px;
+  color:#fff;
+  font-size:14px;
+}
+
+.question-text{
+  margin-bottom:10px;
+  color:#fff;
+  font-size:15px;
 }
 
 .card button{
@@ -139,10 +151,22 @@ body{
   color:white;
 }
 
-.question-text{
-  margin-bottom:10px;
-  color:#fff;
-  font-size:15px;
+.side-links{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:20px;
+}
+
+.side-links a{
+  text-decoration:none;
+  color:#00e5ff;
+  transition:0.3s;
+  font-size:14px;
+}
+
+.side-links a:hover{
+  color:white;
 }
 
 @keyframes fadeIn{
@@ -167,5 +191,10 @@ body{
 
   .card h1{
     font-size:30px;
+  }
+
+  .side-links{
+    flex-direction:column;
+    align-items:center;
   }
 }

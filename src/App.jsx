@@ -1,9 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route }
+from "react-router-dom";
 
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ChangePassword from "./pages/ChangePassword";
 import ForgotPassword from "./pages/ForgotPassword";
+import ChangeCredentials from "./pages/ChangeCredentials";
 
 import "./index.css";
 
@@ -15,13 +17,40 @@ function App() {
 
       <Routes>
 
-        <Route path="/" element={<Register />} />
+        {/* REGISTER */}
 
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={<Register />}
+        />
 
-        <Route path="/changePassword" element={<ChangePassword />} />
+        {/* LOGIN */}
 
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        {/* CHANGE PASSWORD */}
+
+        <Route
+          path="/changePassword"
+          element={<ChangePassword />}
+        />
+
+        {/* FORGOT PASSWORD */}
+
+        <Route
+          path="/forgotPassword"
+          element={<ForgotPassword />}
+        />
+
+        {/* CHANGE USER CREDENTIALS */}
+
+        <Route
+          path="/changeCredentials"
+          element={<ChangeCredentials />}
+        />
 
       </Routes>
 
